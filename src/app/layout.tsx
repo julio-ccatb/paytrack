@@ -8,7 +8,7 @@ import { ThemeProvider } from "./_components/providers/themeProvider";
 export const metadata = {
   title: "Julio Castaño",
   description: "Personal portfolio",
-  icons: [{ rel: "icon", url: "/Logo.svg" }],
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 const fontSans = FontSans({

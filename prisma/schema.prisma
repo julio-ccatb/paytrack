@@ -5,6 +5,13 @@ generator client {
     provider = "prisma-client-js"
 }
 
+generator zod {
+    provider                  = "zod-prisma-types"
+    createPartialTypes        = "true"
+    createRelationValuesTypes = "true"
+    useMultipleFiles          = "true"
+}
+
 datasource db {
     provider = "sqlite"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
@@ -80,9 +87,11 @@ model VerificationToken {
 //////////////////////////////////////////////////////////////
 
 model Customer {
-    id       String    @id @default(cuid())
-    name     String
-    projects Project[]
+    id           String    @id @default(cuid())
+    organization String?
+    email        String /// @zod.string.email()
+    manager      String
+    projects     Project[]
 }
 
 model Project {
