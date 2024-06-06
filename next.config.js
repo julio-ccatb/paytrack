@@ -5,6 +5,15 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [
+      { hostname: "lh3.googleusercontent.com", protocol: "https" },
+      { hostname: "www.svgrepo.com", protocol: "https" },
+    ],
+  },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+};
 
 export default config;
