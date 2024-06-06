@@ -1,10 +1,10 @@
-import { GeistSans } from "geist/font/sans";
-import { Inter as FontSans } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
+import { GeistSans } from "geist/font/sans";
+import { Inter as FontSans } from "next/font/google";
 import { ThemeProvider } from "./_components/providers/themeProvider";
-import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Julio Castaño",

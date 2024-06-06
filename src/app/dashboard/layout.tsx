@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,11 +7,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import Link from "next/link";
 import { ModeToggle } from "../_components/modeToggle";
 
 export const metadata = {

@@ -1,9 +1,9 @@
-import { TRPCError } from "@trpc/server";
 import { Prisma } from "@prisma/client";
-import { createTRPCRouter, publicProcedure } from "../trpc";
-import { mapPrismaErrorToTrpcError } from "../utils/prismaErrorHandler";
+import { TRPCError } from "@trpc/server";
 import { CustomerCreateWithoutProjectsInputSchema } from "pg/generated/zod";
 import CustomerFindManyArgsSchema from "../../../../prisma/generated/zod/outputTypeSchemas/CustomerFindManyArgsSchema";
+import { createTRPCRouter, publicProcedure } from "../trpc";
+import { mapPrismaErrorToTrpcError } from "../utils/prismaErrorHandler";
 
 export const customerRouter = createTRPCRouter({
   create: publicProcedure

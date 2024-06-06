@@ -1,4 +1,6 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { CredenzaClose } from "@/components/ui/cardenza";
 import {
   Form,
   FormControl,
@@ -8,16 +10,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { CustomerCreateWithoutProjectsInputSchema } from "pg/generated/zod";
-import { type z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
-import { api } from "@/trpc/react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { CredenzaClose } from "@/components/ui/cardenza";
+import { useToast } from "@/components/ui/use-toast";
+import { api } from "@/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomerCreateWithoutProjectsInputSchema } from "pg/generated/zod";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { type z } from "zod";
 
 const CreateCustomerForm = () => {
   type TInput = z.infer<typeof CustomerCreateWithoutProjectsInputSchema>;
