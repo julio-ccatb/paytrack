@@ -31,22 +31,22 @@ export default function RootLayout({
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <span className=" ">PayTrack</span>
           </Link>
           <Link
-            href="#"
+            href="/dachboard/projects"
             className="text-foreground transition-colors hover:text-foreground"
           >
             Projects
           </Link>
           <Link
-            href="#"
+            href="/dashboard/clients"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Clients
           </Link>
           <Link
-            href="#"
+            href="/dashboard/financials"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Financials
@@ -70,7 +70,7 @@ export default function RootLayout({
                 className="flex items-center gap-2 text-lg font-semibold"
               >
                 <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
+                <span className="">PayTrack</span>
               </Link>
               <Link href="#" className="hover:text-foreground">
                 Projects

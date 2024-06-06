@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "./_components/providers/themeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Julio Castaño",
@@ -35,7 +36,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            {" "}
+            <div vaul-drawer-wrapper="" className="bg-background">
+              {children}
+              <Toaster />
+            </div>
+          </TRPCReactProvider>
         </ThemeProvider>
       </body>
     </html>

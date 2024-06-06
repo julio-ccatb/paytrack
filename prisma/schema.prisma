@@ -88,7 +88,7 @@ model VerificationToken {
 
 model Customer {
     id           String    @id @default(cuid())
-    organization String?
+    organization String    @default("self")
     email        String /// @zod.string.email()
     manager      String
     projects     Project[]
