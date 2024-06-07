@@ -40,8 +40,8 @@ const CreateCustomerForm = () => {
     },
   });
   const { toast } = useToast();
-  const onSubmit: SubmitHandler<TInput> = (data, event) => {
-    console.log(data, event);
+  const onSubmit: SubmitHandler<TInput> = (data) => {
+    console.log(data);
 
     mutate(data);
   };
@@ -62,7 +62,7 @@ const CreateCustomerForm = () => {
                     <Input placeholder="Name of the contact" {...field} />
                   </FormControl>
                   <FormDescription>
-                    This is gonna be the display name for all comunications
+                    This is gonna be the display name for all comunications.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -75,9 +75,11 @@ const CreateCustomerForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="contact email" {...field} />
+                    <Input placeholder="example@jcodea.com" {...field} />
                   </FormControl>
-                  <FormDescription>Contact email.</FormDescription>
+                  <FormDescription>
+                    Contact email, used as billing address.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -106,9 +108,17 @@ const CreateCustomerForm = () => {
           </div>
         )}
         <div className="flex w-full flex-col gap-2 py-4">
-          {!isSuccess && <Button className="w-full text-base">Submit</Button>}
+          {!isSuccess && (
+            <Button type="submit" className="w-full text-base">
+              Submit
+            </Button>
+          )}
           <CredenzaClose>
-            <Button className="w-full text-base" variant={"destructive"}>
+            <Button
+              type="reset"
+              className="w-full text-base"
+              variant={"destructive"}
+            >
               {!isSuccess ? "Cancel" : "Close"}
             </Button>{" "}
           </CredenzaClose>
