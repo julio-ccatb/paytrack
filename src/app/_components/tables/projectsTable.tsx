@@ -46,9 +46,7 @@ const ProjectTable = ({ data }: { data: Project[] }) => {
         </p>
       ),
       cell: (row) => (
-        <TableCell>
-          <div className="font-medium">{row.row.original.title}</div>
-        </TableCell>
+        <div className="font-medium">{row.row.original.title}</div>
       ),
       enableSorting: true,
     },
@@ -64,18 +62,32 @@ const ProjectTable = ({ data }: { data: Project[] }) => {
         </p>
       ),
       cell: (row) => (
-        <TableCell>
-          <div className="inline text-sm uppercase text-muted-foreground">
-            {row.row.original.status === "active" ? (
-              <Badge
-                className="my-1 -ml-2 text-nowrap"
-                variant={"secondary"}
-              >{`${row.row.original.status} 🟢`}</Badge>
-            ) : (
-              row.row.original.status
-            )}
-          </div>
-        </TableCell>
+        <div className="inline text-sm text-muted-foreground">
+          {row.row.original.status === "Active" ? (
+            <Badge
+              className="my-1 -ml-2 text-nowrap"
+              variant={"secondary"}
+            >{`${row.row.original.status} 🟢`}</Badge>
+          ) : (
+            ""
+          )}
+          {row.row.original.status === "Staged" ? (
+            <Badge
+              className="my-1 -ml-2 text-nowrap"
+              variant={"secondary"}
+            >{`${row.row.original.status} 🟠`}</Badge>
+          ) : (
+            ""
+          )}
+          {row.row.original.status === "Disabled" ? (
+            <Badge
+              className="my-1 -ml-2 text-nowrap"
+              variant={"secondary"}
+            >{`${row.row.original.status} 🔴`}</Badge>
+          ) : (
+            ""
+          )}
+        </div>
       ),
       enableSorting: true,
     },
