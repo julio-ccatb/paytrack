@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -26,28 +27,53 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { type Customer } from "prisma/generated/zod";
+import { type Project } from "prisma/generated/zod";
 import { useState } from "react";
 
-const ClientsTable = ({ data }: { data: Customer[] }) => {
-  const columns: ColumnDef<Customer>[] = [
+const ProjectTable = ({ data }: { data: Project[] }) => {
+  const columns: ColumnDef<Project>[] = [
     {
-      accessorKey: "manager",
+      accessorKey: "title",
       header: ({ column }) => (
         <p
           className="flex items-center gap-1 hover:cursor-pointer hover:text-primary"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Customer
+          Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </p>
       ),
       cell: (row) => (
         <TableCell>
-          <div className="font-medium">{row.row.original.manager}</div>
-          <div className="inline text-sm text-muted-foreground">
-            {row.row.original.email}
+          <div className="font-medium">{row.row.original.title}</div>
+        </TableCell>
+      ),
+      enableSorting: true,
+    },
+    {
+      accessorKey: "status",
+      header: ({ column }) => (
+        <p
+          className="flex items-center gap-1 hover:cursor-pointer hover:text-primary"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </p>
+      ),
+      cell: (row) => (
+        <TableCell>
+          <div className="inline text-sm uppercase text-muted-foreground">
+            {row.row.original.status === "active" ? (
+              <Badge
+                className="my-1 -ml-2 text-nowrap"
+                variant={"secondary"}
+              >{`${row.row.original.status} 🟢`}</Badge>
+            ) : (
+              row.row.original.status
+            )}
           </div>
         </TableCell>
       ),
@@ -56,7 +82,7 @@ const ClientsTable = ({ data }: { data: Customer[] }) => {
     {
       accessorKey: "organization",
       header: "Organization",
-      cell: (row) => row.row.original.organization.toUpperCase(),
+      cell: (row) => format(row.row.original.createdAt, "PP"),
     },
     {
       id: "actions",
@@ -176,4 +202,4 @@ const ClientsTable = ({ data }: { data: Customer[] }) => {
   );
 };
 
-export default ClientsTable;
+export default ProjectTable;
