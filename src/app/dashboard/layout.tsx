@@ -12,16 +12,24 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "../_components/modeToggle";
+import { getServerAuthSession } from "@/server/auth";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/lib/routesEnum";
 
 export const metadata = {
   title: "PayTrack - Clients",
   description: "PayTrack",
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession();
+
+  if (!session) redirect(ROUTES.LOGIN);
+
   return (
     <div>
       <div className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -104,7 +112,13 @@ export default function RootLayout({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
+                <Image
+                  className="!rounded-full"
+                  src={session.user.image!}
+                  alt={session.user.name!}
+                  width={160}
+                  height={160}
+                />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -114,7 +128,12 @@ export default function RootLayout({
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <Link
+                className="hover:cursor-pointer"
+                href={"/api/auth/signout/google"}
+              >
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </Link>
               <ModeToggle label="Theme" />
             </DropdownMenuContent>
           </DropdownMenu>
