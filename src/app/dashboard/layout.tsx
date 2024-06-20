@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
-import Link from "next/link";
-import { ModeToggle } from "../_components/modeToggle";
-import { getServerAuthSession } from "@/server/auth";
-import Image from "next/image";
-import { redirect } from "next/navigation";
 import { ROUTES } from "@/lib/routesEnum";
+import { getServerAuthSession } from "@/server/auth";
+import { Menu, Package2, Search } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ModeToggle } from "../_components/modeToggle";
 
 export const metadata = {
   title: "PayTrack - Clients",
@@ -42,19 +42,19 @@ export default async function RootLayout({
             <span className=" ">PayTrack</span>
           </Link>
           <Link
-            href="/dachboard/projects"
-            className="text-foreground transition-colors hover:text-foreground"
+            href={ROUTES.PROJECTS}
+            className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Projects
           </Link>
           <Link
-            href="/dashboard/clients"
+            href={ROUTES.CLIENTS}
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Clients
           </Link>
           <Link
-            href="/dashboard/financials"
+            href={ROUTES.FINANCE}
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Financials
@@ -80,17 +80,17 @@ export default async function RootLayout({
                 <Package2 className="h-6 w-6" />
                 <span className="">PayTrack</span>
               </Link>
-              <Link href="#" className="hover:text-foreground">
+              <Link href={ROUTES.PROJECTS} className="hover:text-foreground">
                 Projects
               </Link>
               <Link
-                href="#"
+                href={ROUTES.CLIENTS}
                 className="text-muted-foreground hover:text-foreground"
               >
                 Clients
               </Link>
               <Link
-                href="#"
+                href={ROUTES.FINANCE}
                 className="text-muted-foreground hover:text-foreground"
               >
                 Financials
@@ -128,10 +128,7 @@ export default async function RootLayout({
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <Link
-                className="hover:cursor-pointer"
-                href={"/api/auth/signout/google"}
-              >
+              <Link className="hover:cursor-pointer" href={ROUTES.LOGOUT}>
                 <DropdownMenuItem>Logout</DropdownMenuItem>
               </Link>
               <ModeToggle label="Theme" />

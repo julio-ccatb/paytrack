@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import {
-  ProjectCreateInputSchema,
   ProjectCreateManyInputSchema,
   ProjectFindManyArgsSchema,
 } from "pg/generated/zod";

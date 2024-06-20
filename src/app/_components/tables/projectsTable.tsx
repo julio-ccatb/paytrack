@@ -32,99 +32,98 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { type Project } from "prisma/generated/zod";
 import { useState } from "react";
 
-const ProjectTable = ({ data }: { data: Project[] }) => {
-  const columns: ColumnDef<Project>[] = [
-    {
-      accessorKey: "title",
-      header: ({ column }) => (
-        <p
-          className="flex items-center gap-1 hover:cursor-pointer hover:text-primary"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </p>
-      ),
-      cell: (row) => (
-        <div className="font-medium">{row.row.original.title}</div>
-      ),
-      enableSorting: true,
-    },
-    {
-      accessorKey: "status",
-      header: ({ column }) => (
-        <p
-          className="flex items-center gap-1 hover:cursor-pointer hover:text-primary"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </p>
-      ),
-      cell: (row) => (
-        <div className="inline text-sm text-muted-foreground">
-          {row.row.original.status === "Active" ? (
-            <Badge
-              className="my-1 -ml-2 text-nowrap"
-              variant={"secondary"}
-            >{`${row.row.original.status} 🟢`}</Badge>
-          ) : (
-            ""
-          )}
-          {row.row.original.status === "Staged" ? (
-            <Badge
-              className="my-1 -ml-2 text-nowrap"
-              variant={"secondary"}
-            >{`${row.row.original.status} 🟠`}</Badge>
-          ) : (
-            ""
-          )}
-          {row.row.original.status === "Disabled" ? (
-            <Badge
-              className="my-1 -ml-2 text-nowrap"
-              variant={"secondary"}
-            >{`${row.row.original.status} 🔴`}</Badge>
-          ) : (
-            ""
-          )}
-        </div>
-      ),
-      enableSorting: true,
-    },
-    {
-      accessorKey: "organization",
-      header: "Organization",
-      cell: (row) => format(row.row.original.createdAt, "PP"),
-    },
-    {
-      id: "actions",
-      cell: ({ row }) => {
-        const customer = row.original;
+const columns: ColumnDef<Project>[] = [
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <p
+        className="flex items-center gap-1 hover:cursor-pointer hover:text-primary"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Title
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </p>
+    ),
+    cell: (row) => <div className="font-medium">{row.row.original.title}</div>,
+    enableSorting: true,
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <p
+        className="flex items-center gap-1 hover:cursor-pointer hover:text-primary"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Status
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </p>
+    ),
+    cell: (row) => (
+      <div className="inline text-sm text-muted-foreground">
+        {row.row.original.status === "Active" ? (
+          <Badge
+            className="my-1 -ml-2 text-nowrap"
+            variant={"secondary"}
+          >{`${row.row.original.status} 🟢`}</Badge>
+        ) : (
+          ""
+        )}
+        {row.row.original.status === "Staged" ? (
+          <Badge
+            className="my-1 -ml-2 text-nowrap"
+            variant={"secondary"}
+          >{`${row.row.original.status} 🟠`}</Badge>
+        ) : (
+          ""
+        )}
+        {row.row.original.status === "Disabled" ? (
+          <Badge
+            className="my-1 -ml-2 text-nowrap"
+            variant={"secondary"}
+          >{`${row.row.original.status} 🔴`}</Badge>
+        ) : (
+          ""
+        )}
+      </div>
+    ),
+    enableSorting: true,
+  },
+  {
+    accessorKey: "startDate",
+    header: "Start Date",
+    cell: (row) => format(row.row.original.createdAt, "PP"),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const customer = row.original;
 
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(customer.id)}
-              >
-                Copy payment ID
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(customer.id)}
+            >
+              Copy payment ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
     },
-  ];
+  },
+];
+
+const ProjectTable = ({ data }: { data: Project[] }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({

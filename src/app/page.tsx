@@ -1,3 +1,6 @@
+import { ROUTES } from "@/lib/routesEnum";
+import { redirect } from "next/navigation";
+
 export default async function Home() {
-  return <>Dimelo</>;
+  redirect(ROUTES.PROJECTS);
 }
