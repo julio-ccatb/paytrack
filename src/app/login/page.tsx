@@ -1,10 +1,13 @@
+"use client";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ROUTES } from "@/lib/routesEnum";
+import { signIn } from "next-auth/react";
 
-export default function Dashboard() {
+export default function LogIn() {
   return (
     <div className="h-screen w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
@@ -40,11 +43,13 @@ export default function Dashboard() {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            <Link href={"/api/auth/signin/google"}>
-              <Button variant="outline" className="w-full">
-                Login with Google
-              </Button>
-            </Link>
+            <Button
+              onClick={() => signIn("google", { callbackUrl: ROUTES.PROJECTS })}
+              variant="outline"
+              className="w-full"
+            >
+              Login with Google
+            </Button>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}

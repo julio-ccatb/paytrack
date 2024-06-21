@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/cardenza";
 import { api } from "@/trpc/server";
 import { CirclePlus } from "lucide-react";
+import { withRoles } from "../../_components/auth/withRoles";
 
 const ProjectsPage = async () => {
   const projects = await api.project.list({});
@@ -55,4 +56,4 @@ const ProjectsPage = async () => {
   );
 };
 
-export default ProjectsPage;
+export default withRoles(ProjectsPage, ["admin"]);

@@ -2,14 +2,21 @@ import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { CustomerCreateWithoutProjectsInputSchema } from "pg/generated/zod";
 import CustomerFindManyArgsSchema from "../../../../prisma/generated/zod/outputTypeSchemas/CustomerFindManyArgsSchema";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import {
+  VerifyRoles,
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "../trpc";
 import { mapPrismaErrorToTrpcError } from "../utils/prismaErrorHandler";
 
 export const customerRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
+    .use(VerifyRoles(["admin"]))
     .input(CustomerCreateWithoutProjectsInputSchema)
     .mutation(async ({ ctx, input }) => {
       try {
+        console.log(ctx.session?.user);
         const customer = await ctx.db.customer.create({ data: input });
         return customer;
       } catch (error) {

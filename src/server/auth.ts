@@ -38,13 +38,20 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    async session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        const roles = await db.role.findMany({
+          where: { userId: user.id },
+        });
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        if (roles) session.user.roles = roles;
+      }
+
+      // console.log(session);
+      return session;
+    },
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [

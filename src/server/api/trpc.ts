@@ -13,6 +13,7 @@ import { ZodError } from "zod";
 
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
+import { codeToRole, UserCode, type UserRole } from "./utils/roles";
 
 /**
  * 1. CONTEXT
@@ -85,6 +86,26 @@ export const createTRPCRouter = t.router;
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
+
+export const VerifyRoles = (admitedRoles: UserRole[]) =>
+  t.middleware(({ ctx, next }) => {
+    const userRoles = ctx.session?.user.roles;
+
+    // Check if userRoles is defined and contains at least one role from admitedRoles
+    const hasRequiredRole = userRoles?.some((role) =>
+      admitedRoles.includes(codeToRole[role.roleId as UserCode]),
+    );
+
+    if (!hasRequiredRole) {
+      // If the user does not have the required role, you can throw an error or return an appropriate response
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    return next({
+      ctx,
+    });
+  });
+
 export const publicProcedure = t.procedure;
 
 /**
@@ -95,6 +116,7 @@ export const publicProcedure = t.procedure;
  *
  * @see https://trpc.io/docs/procedures
  */
+
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });

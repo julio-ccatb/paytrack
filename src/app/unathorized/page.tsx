@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import useRedirectAfterSomeSeconds from "../_components/hooks/redirectHook";
+import useRedirectAfterSomeSeconds from "../../hooks/redirectHook";
 import { XOctagon } from "lucide-react";
 import { ROUTES } from "@/lib/routesEnum";
 
 const Unauthorized = () => {
-  const { secondsRemaining } = useRedirectAfterSomeSeconds(ROUTES.HOME, 5);
+  const { secondsRemaining } = useRedirectAfterSomeSeconds(ROUTES.LOGIN, 5);
 
   return (
     <div className="bg-error flex h-screen w-screen">

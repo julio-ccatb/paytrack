@@ -55,6 +55,13 @@ const CreateProjectForm = () => {
         ),
       });
     },
+    onError: (err) =>
+      toast({
+        variant: "destructive",
+        title: `${err.data?.httpStatus}`,
+        description: `${err.message}`,
+        action: <ToastAction altText="Add a project">Close</ToastAction>,
+      }),
   });
   const { data: customers } = api.customer.list.useQuery({});
   const { toast } = useToast();
